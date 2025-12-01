@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
         String[] input = AOC.input("src/Day1/input.txt");
-        AOC.printInput(input);
+        //AOC.printInput(input);
         int size = input.length;
 
         int[] direction = new int[size];
@@ -25,25 +25,41 @@ public class Main {
 
         int position = 50;
         int counter = 0;
+        int new_counter = 0;
         for (int i = 0; i < size; i++) {
-            position += direction[i] * amount[i];
-            position = wrap(position);
+            int new_position = position + direction[i] * amount[i];
+            int[] result = wrap(new_position, position);
+            position = result[0];
             if(position == 0){
                 counter ++;
             }
+            new_counter += result[1];
+
+            System.out.println(input[i] + " " + result[0] + " " +  new_counter);
         }
 
         System.out.println("Day 1 part 1: " + counter);
+        System.out.println("Day 1 part 2: " + (new_counter + counter));
 
     }
 
-    public static int wrap(int number){
+    public static int[] wrap(int number, int old_number){
+        int[] result = new int[2];
+        int counter = 0;
         while(number < 0){
             number += 100;
+            if(old_number != 0)
+                counter++;
+            else
+                old_number = 1;
         }
         while(number > 99){
             number -= 100;
+            if (number != 0 )
+                counter++;
         }
-        return number;
+        result[0] = number;
+        result[1] = counter;
+        return result;
     }
 }
