@@ -9,19 +9,36 @@ public class Main {
         boolean[][] map = AOC.convertCharToBoolean(charMap, '@');
         AOC.printBoolMap(map);
 
+        int count = CountRemovablePapers(map, false);
 
+        System.out.println("Day 4 Part 1: " + count);
+
+        int count2 = CountRemovablePapers(map, true);
+
+        System.out.println("Day 4 Part 2: " + count2);
+    }
+
+    public static int CountRemovablePapers(boolean[][] map, boolean withRemoval){
         int count = 0;
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[0].length; j++) {
-                if(isPaper(map, i, j)) {
-                    int amount = checkNeighbours(map, i, j);
-                    if(amount < 4){
-                        count++;
+        boolean removed = true;
+        while(removed) {
+            removed = false;
+            for (int i = 0; i < map.length; i++) {
+                for (int j = 0; j < map[0].length; j++) {
+                    if (isPaper(map, i, j)) {
+                        int amount = checkNeighbours(map, i, j);
+                        if (amount < 4) {
+                            count++;
+                            if (withRemoval) {
+                                removed = true;
+                                map[i][j] = false;
+                            }
+                        }
                     }
                 }
             }
         }
-        System.out.println("Day 4 Part 1: " + count);
+        return count;
     }
 
     private static int checkNeighbours(boolean[][] map, int x, int y) {
