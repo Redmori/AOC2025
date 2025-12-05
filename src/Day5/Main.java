@@ -8,7 +8,7 @@ import java.util.Collections;
 
 public class Main {
     public static void main(String[] args) {
-        String[] input = AOC.input("src/Day5/testinput.txt");
+        String[] input = AOC.input("src/Day5/input.txt");
 
         ArrayList<FreshRange> ranges = new ArrayList<>();
         int counter = 0;
@@ -17,7 +17,6 @@ public class Main {
         do {
             FreshRange newRange = new FreshRange(input[i]);
             ranges.add(newRange);
-            System.out.println(newRange);
             i++;
         }while (!input[i].equals(""));
         i++;
@@ -33,41 +32,33 @@ public class Main {
         System.out.println("Day 5 Part 1: " + counter);
 
         Collections.sort(ranges);
+        ArrayList<FreshRange> mergedRanges = combineRanges(ranges);
 
-        System.out.println("=====");
+        long volume = getVolume(mergedRanges);
+
+        System.out.println("Day 5 Part 2: " + volume);
+
+    }
+
+    private static ArrayList<FreshRange> combineRanges(ArrayList<FreshRange> ranges) {
+        ArrayList<FreshRange> mergedRanges = new ArrayList<>();
+
         for(FreshRange range : ranges){
-            System.out.println(range);
-        }
-        System.out.println("=====");
-
-        long maxValue = ranges.getLast().end;
-
-        long currentValue = 0;
-        ArrayList<FreshRange> invertedRanges = new ArrayList<>();
-        for(FreshRange range : ranges){
-            if(range.start > currentValue){
-                FreshRange newInvertedRange = new FreshRange(currentValue, range.start);
-                invertedRanges.add(newInvertedRange);
-                currentValue = range.end;
-            } else if (range.start <= invertedRanges.getLast().end && range.end > invertedRanges.getLast().end) {
-                //invertedRanges.getLast().end = range.start;
-                currentValue = range.end;
+            if(!mergedRanges.isEmpty() && mergedRanges.getLast().overlaps(range)){
+                mergedRanges.getLast().merge(range);
+            }else {
+                mergedRanges.add(range);
             }
         }
+        return mergedRanges;
+    }
 
-        for(FreshRange range : invertedRanges){
-            System.out.println(range);
-        }
-
+    private static long getVolume(ArrayList<FreshRange> ranges) {
         long volume = 0;
-        for(FreshRange range : invertedRanges){
+        for(FreshRange range : ranges){
             volume += range.countVolume();
         }
-
-
-
-        System.out.println("Day 5 Part 2: " + (maxValue - volume + 1));
-
+        return volume;
     }
 
 

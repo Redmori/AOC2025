@@ -19,8 +19,16 @@ public class FreshRange  implements Comparable<FreshRange>  {
         return value >= start && value <= end;
     }
 
+    public boolean overlaps(FreshRange range){
+        return (range.start >= start && range.start <= end);
+    }
+
+    public void merge(FreshRange range){
+        end = Math.max(end, range.end);
+    }
+
     public long countVolume(){
-        return end - start - 1;
+        return end - start + 1;
     }
 
     @Override
