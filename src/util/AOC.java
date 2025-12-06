@@ -3,6 +3,7 @@ package util;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class AOC {
@@ -27,9 +28,15 @@ public class AOC {
     }
 
     public static char[][] convertStringToChar(String[] input){
-        char[][] converted = new char[input.length][input[0].length()];
+        int stringLength = input[0].length();
+        for (int i = 0; i < input.length; i++) {
+            stringLength = Math.max(stringLength, input[i].length());
+        }
+        char[][] converted = new char[input.length][stringLength];
         for(int i = 0; i < input.length; i++){
-            converted[i] = input[i].toCharArray();
+            Arrays.fill(converted[i], ' ');
+            char[] current = input[i].toCharArray();
+            System.arraycopy(current, 0, converted[i], 0, Math.min(current.length, stringLength));
         }
         return converted;
     }

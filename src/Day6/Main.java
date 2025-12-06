@@ -37,5 +37,65 @@ public class Main {
 
         System.out.println("Day 6 Part 1: " + solution);
 
+
+        char[][] map = AOC.convertStringToChar(input);
+        AOC.printInput(map);
+        int vs = map.length;
+
+        int hs = 0;
+        for (int i = 0; i < vs; i++) {
+            hs = Math.max(hs, map[i].length);
+        }
+
+        System.out.println(vs);
+        System.out.println(hs);
+
+        System.out.println("=========");
+
+
+        long solution2 = 0;
+        ArrayList<Integer> values = new ArrayList<>();
+        for (int j = hs - 1; j >= 0; j--) {
+            StringBuilder number = new StringBuilder();
+            for (int i = 0; i < vs - 1; i++) {
+                if(map[i][j] != ' '){
+                    number.append(map[i][j]);
+                }
+            }
+            String string = number.toString();
+            if (!string.equals("")) {
+                int value = Integer.parseInt(string);
+                values.add(value);
+                System.out.println(value);
+
+                if(map[vs - 1][j] == '*'){
+                    solution2 += multiply(values);
+                    values.clear();
+                } else if (map[vs - 1][j] == '+') {
+                    solution2 += sum(values);
+                    values.clear();
+                }
+            }
+        }
+
+        System.out.println("Day 6 Part 2 " + solution2);
+
+    }
+
+    private static long sum(ArrayList<Integer> values) {
+        long solution = 0;
+        for (int i = 0; i < values.size(); i++) {
+            solution += values.get(i);
+        }
+        return solution;
+    }
+
+    private static long multiply(ArrayList<Integer> values) {
+        long solution = 0;
+        solution = values.getFirst();
+        for (int i = 1; i < values.size(); i++) {
+            solution *= values.get(i);
+        }
+        return solution;
     }
 }
