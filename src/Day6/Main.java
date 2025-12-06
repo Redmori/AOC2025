@@ -6,9 +6,24 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        String[] input = AOC.input("src/Day6/input.txt");
+        String[] input = AOC.input("src/Day6/testinput.txt");
         AOC.printInput(input);
 
+        ArrayList<Problem> problems = getProblems(input);
+
+        long solution1 = getSolution1(problems);
+
+        System.out.println("Day 6 Part 1: " + solution1);
+
+
+        char[][] map = AOC.convertStringToChar(input);
+        long solution2 = getSolution2(map);
+
+        System.out.println("Day 6 Part 2 " + solution2);
+
+    }
+
+    private static ArrayList<Problem> getProblems(String[] input) {
         int vSize = input.length;
 
         String[][] seperated = new String[vSize][];
@@ -27,31 +42,25 @@ public class Main {
             }
             Problem newProblem = new Problem(intList);
             problems.add(newProblem);
-            System.out.println(newProblem);
         }
+        return problems;
+    }
 
-        long solution = 0;
+    private static long getSolution1(ArrayList<Problem> problems) {
+        long solution1 = 0;
         for(Problem problem : problems){
-            solution += problem.solve();
+            solution1 += problem.solve();
         }
+        return solution1;
+    }
 
-        System.out.println("Day 6 Part 1: " + solution);
-
-
-        char[][] map = AOC.convertStringToChar(input);
-        AOC.printInput(map);
+    private static long getSolution2(char[][] map) {
         int vs = map.length;
 
         int hs = 0;
         for (int i = 0; i < vs; i++) {
             hs = Math.max(hs, map[i].length);
         }
-
-        System.out.println(vs);
-        System.out.println(hs);
-
-        System.out.println("=========");
-
 
         long solution2 = 0;
         ArrayList<Integer> values = new ArrayList<>();
@@ -66,8 +75,6 @@ public class Main {
             if (!string.equals("")) {
                 int value = Integer.parseInt(string);
                 values.add(value);
-                System.out.println(value);
-
                 if(map[vs - 1][j] == '*'){
                     solution2 += multiply(values);
                     values.clear();
@@ -77,9 +84,7 @@ public class Main {
                 }
             }
         }
-
-        System.out.println("Day 6 Part 2 " + solution2);
-
+        return solution2;
     }
 
     private static long sum(ArrayList<Integer> values) {
