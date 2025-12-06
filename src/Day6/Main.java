@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        String[] input = AOC.input("src/Day6/testinput.txt");
+        String[] input = AOC.input("src/Day6/input.txt");
         AOC.printInput(input);
 
         ArrayList<Problem> problems = getProblems(input);
