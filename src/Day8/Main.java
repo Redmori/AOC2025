@@ -50,6 +50,20 @@ public class Main {
         circuits.sort(Comparator.comparingInt(ArrayList::size));
         Collections.reverse(circuits);
 
-        System.out.println("Day 8 Part 1: " + (circuits.get(0).size() * circuits.get(1).size() * circuits.get(2).size()));;
+        System.out.println("Day 8 Part 1: " + (circuits.get(0).size() * circuits.get(1).size() * circuits.get(2).size()));
+
+        //Connect
+        long solution2 = 0;
+        while(!pairs.isEmpty()){
+            BoxPair pr = pairs.getFirst();
+            boolean didConnect = pr.attemptConnect();
+            if(didConnect){
+                solution2 = pr.box1.x * pr.box2.x;
+            }
+            pairs.removeFirst();
+        }
+
+        System.out.println("Day 8 Part 2: " + solution2);
+
     }
 }
