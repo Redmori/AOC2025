@@ -23,14 +23,7 @@ public class Line {
     }
 
     public boolean intersectsLine(int pos2, int start2, int end2){
-        //System.out.println(position + " " + start + " " + end + " " + horizontal+ " <-> " + pos2 + " " + start2 + " " + end2);
-        boolean fullIntersect = pos2 > start && pos2 < end && position > start2 && position < end2;
-        boolean Tsection1 = start == pos2 && start2 < position && end2 > position;
-        boolean Tsection2 = end == pos2 && start2 < position && end2 > position;
-        boolean Tsection3 = start2 == position && start < pos2 && end > pos2;
-        boolean Tsection4 = end2 == position && start < pos2 && end > pos2;
-        //System.out.println(fullIntersect || Tsection1 || Tsection2 || Tsection3 || Tsection4);
-        return fullIntersect || Tsection1 || Tsection2 || Tsection3 || Tsection4;
+        return pos2 > start && pos2 < end && position > start2 && position < end2;
     }
 
     @Override

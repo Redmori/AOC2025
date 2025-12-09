@@ -13,7 +13,6 @@ public class Main {
         for (int i = 0; i < input.length; i++) {
             Tile newTile = new Tile(input[i]);
             redTiles.add(newTile);
-            System.out.println(newTile);
         }
 
         long maxSize = 0;
@@ -38,32 +37,28 @@ public class Main {
                 newLine = new Line(tile.y, Math.min(tile.x, lastTile.x) , Math.max(tile.x, lastTile.x), true);
             }
             lines.add(newLine);
-            //System.out.println(newLine);
             lastTile = tile;
         }
 
         long maxSize2 = 0;
-        Tile t1 = null;
-        Tile t2 = null;
 
         for (int i = 0; i < redTiles.size(); i++) {
+            tilings:
             for (int j = i + 1; j < redTiles.size(); j++) {
                 if(!intersectsLines(redTiles.get(i), redTiles.get(j), lines)){
-                    long size = redTiles.get(i).squareSize(redTiles.get(j));
-                    if(size > maxSize2){ //TEMP
-                        t1 = redTiles.get(i);
-                        t2 = redTiles.get(j);
+                    for(Tile tile : redTiles){
+                        if(tile.isInRect(redTiles.get(i), redTiles.get(j))){
+                            continue tilings;
+                        }
                     }
+                    long size = redTiles.get(i).squareSize(redTiles.get(j));
+
                     maxSize2 = Math.max(size, maxSize2);
+
                 }
             }
         }
-        System.out.println(t1);
-        System.out.println(t2);
         System.out.println("Day 9 Part 2 " + maxSize2);
-
-        System.out.println("========");
-        //intersectsLines(t1, t2, lines);
     }
 
     private static boolean intersectsLines(Tile tile1, Tile tile2, ArrayList<Line> lines) {
