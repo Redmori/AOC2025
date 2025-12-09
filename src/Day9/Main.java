@@ -7,7 +7,7 @@ import java.util.BitSet;
 
 public class Main {
     public static void main(String[] args) {
-        String[] input = AOC.input("src/Day9/testinput.txt");
+        String[] input = AOC.input("src/Day9/input.txt");
 
         ArrayList<Tile> redTiles = new ArrayList<>();
         for (int i = 0; i < input.length; i++) {
@@ -38,6 +38,8 @@ public class Main {
                 newLine = new Line(tile.y, Math.min(tile.x, lastTile.x) , Math.max(tile.x, lastTile.x), true);
             }
             lines.add(newLine);
+            //System.out.println(newLine);
+            lastTile = tile;
         }
 
         long maxSize2 = 0;
@@ -59,6 +61,9 @@ public class Main {
         System.out.println(t1);
         System.out.println(t2);
         System.out.println("Day 9 Part 2 " + maxSize2);
+
+        System.out.println("========");
+        //intersectsLines(t1, t2, lines);
     }
 
     private static boolean intersectsLines(Tile tile1, Tile tile2, ArrayList<Line> lines) {
