@@ -1,8 +1,8 @@
 package Day9;
 
 public class Tile {
-    public long x;
-    public long y;
+    public int x;
+    public int y;
 
     public Tile(String position){
         String[] split = position.split(",");
@@ -11,7 +11,7 @@ public class Tile {
     }
 
     public long squareSize(Tile otherTile){
-        return (Math.abs(x - otherTile.x) + 1) * (Math.abs(y - otherTile.y) + 1);
+        return (long) (Math.abs(x - otherTile.x) + 1) * (Math.abs(y - otherTile.y) + 1);
     }
 
     @Override
