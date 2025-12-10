@@ -6,19 +6,24 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        String[] input = AOC.input("src/Day10/input.txt");
+        String[] input = AOC.input("src/Day10/testinput.txt");
         AOC.printInput(input);
 
         ArrayList<Machine> machines = createMachines(input);
 
+        long presses = getPresses1(machines);
+
+        System.out.println("Day 10 Part 1: " + presses);
+    }
+
+    private static long getPresses1(ArrayList<Machine> machines) {
         long presses = 0;
         for(Machine machine : machines){
             System.out.println("Starting machine: " + (machines.indexOf(machine) + 1) + "/" + machines.size());
             presses += machine.calculatePresses();
             System.out.println("machine needs " + presses);
         }
-
-        System.out.println("Day 10 Part 1: " + presses);
+        return presses;
     }
 
     private static ArrayList<Machine> createMachines(String[] input) {
@@ -37,8 +42,9 @@ public class Main {
             }
 
             //Joltage (Ignore for now)
+            String joltage = splitInput[splitInput.length - 1].substring(1, splitInput[splitInput.length - 1].length() - 1);
 
-            Machine newMachine = new Machine(lights, buttons);
+            Machine newMachine = new Machine(lights, buttons, joltage);
             machines.add(newMachine);
             System.out.println(newMachine);
         }

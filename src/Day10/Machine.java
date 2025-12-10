@@ -6,10 +6,16 @@ import java.util.Arrays;
 public class Machine {
     String lights;
     public ArrayList<Button> buttons;
+    public ArrayList<Integer> joltage;
 
-    public Machine(String l, ArrayList<Button> bs){
+    public Machine(String l, ArrayList<Button> bs, String j){
         lights = l;
         buttons = bs;
+        joltage = new ArrayList<>();
+        String[] splitJoltage = j.split(",");
+        for (int i = 0; i < splitJoltage.length; i++) {
+            joltage.add(Integer.valueOf(splitJoltage[i]));
+        }
     }
 
     public int calculatePresses(){
@@ -68,6 +74,6 @@ public class Machine {
 
     @Override
     public String toString() {
-        return "[" + lights + "] " + buttons;
+        return "[" + lights + "] " + buttons + " {" + joltage + "}";
     }
 }
