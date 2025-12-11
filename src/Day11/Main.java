@@ -10,7 +10,7 @@ public class Main {
     public static ArrayList<Device> devices = new ArrayList<>();
 
     public static void main(String[] args) {
-        String[] input = AOC.input("src/Day11/input.txt");
+        String[] input = AOC.input("src/Day11/testinput2.txt");
         AOC.printInput(input);
 
         for (int i = 0; i < input.length; i++) {
@@ -21,17 +21,28 @@ public class Main {
         }
 
         Device youDevice = null;
+        Device svrDevice = null;
         for (Device device : devices){
             System.out.println(device);
             if(device.name.equals("you")){
                 youDevice = device;
+            } else if (device.name.equals("svr")) {
+                svrDevice = device;
             }
         }
 
-        assert youDevice != null;
-        int result1 = youDevice.calculatePathsToOut();
+        if(youDevice != null) {
+            int result1 = youDevice.calculatePathsToOut();
 
-        System.out.println("Day 11 Part 1: " + result1);
+            System.out.println("Day 11 Part 1: " + result1);
+        }
+
+
+        if(svrDevice != null) {
+            long[] result2 = svrDevice.calculatePathsToOut2(false, false);
+
+            System.out.println("Day 12 Part 2: " + result2[0]);
+        }
 
 
     }

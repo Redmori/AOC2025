@@ -10,6 +10,11 @@ public class Device {
 
     public int pathsToOut;
 
+    public long[] pathsToOut2;
+    boolean saved = false;
+    boolean visitedDacAfter = false;
+    boolean visitedFftAfter = false;
+
     public Device(String nm){
         name = nm;
     }
@@ -26,6 +31,60 @@ public class Device {
             sum += outputs[i].calculatePathsToOut();
         }
         pathsToOut = sum;
+        return sum;
+    }
+
+    public long[] calculatePathsToOut2(boolean visitedDac, boolean visitedFft){
+        if(name.equals("out")) {
+            if(visitedDac && visitedFft){
+                return new long[]{1,0,0,0};
+            }
+            else{
+                return new long[]{0,0,0,0};
+            }
+        }
+
+        boolean visitedFft2 = visitedFft;
+        boolean visitedDac2 = visitedDac;
+        if(name.equals("fft")) {
+            visitedFft2 = true;
+        }
+        if(name.equals("dac")) {
+            visitedDac2 = true;
+        }
+//        if(pathsToOut2 > 0 && (visitedDac || visitedDacAfter) && (visitedFft || visitedFftAfter)) {
+//            System.out.println("skpping");
+//            return pathsToOut2;
+//        }
+
+        if(saved){
+            return pathsToOut2;
+        }
+
+        long[] sum = new long[4];
+        for (int i = 0; i < outputs.length; i++) {
+            sum[0] += outputs[i].calculatePathsToOut2(visitedDac2, visitedFft2)[0];
+        }
+        if(name.equals("fft")) {
+            sum[1] = sum[0];
+        }
+        else if(name.equals("dac")) {
+            sum[2] = sum[0];
+        }
+
+        pathsToOut2 = sum;
+        saved = true;
+//        pathsToOut2 = sum;
+//        if(sum > 0){
+//            if(!visitedDac2) {
+//                System.out.println("assigned dac after");
+//                visitedDacAfter = true;
+//            }
+//            if(!visitedFft2) {
+//                System.out.println("assigned fft after");
+//                visitedFftAfter = true;
+//            }
+//        }
         return sum;
     }
 
